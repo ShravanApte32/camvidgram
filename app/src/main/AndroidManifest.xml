@@ -32,6 +32,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Camvidgram">
         <activity
+            android:name=".presentation.registeruser.RegisterUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.login.LoginActivity"
             android:exported="false" />
         <activity

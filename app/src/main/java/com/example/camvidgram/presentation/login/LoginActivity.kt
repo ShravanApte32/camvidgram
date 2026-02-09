@@ -17,8 +17,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.camvidgram.R
 import com.example.camvidgram.domain.models.LoginState
-import com.example.camvidgram.presentation.viewmodels.LoginViewModel
+import com.example.camvidgram.presentation.login.LoginViewModel
 import com.example.camvidgram.presentation.main.MainActivity
+import com.example.camvidgram.presentation.registeruser.RegisterUserActivity
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 
@@ -71,7 +72,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         tvSignUp.setOnClickListener {
-            Toast.makeText(this, "Sign up clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@LoginActivity, RegisterUserActivity::class.java)
+            startActivity(intent)
         }
 
         tvForgotPassword.setOnClickListener {

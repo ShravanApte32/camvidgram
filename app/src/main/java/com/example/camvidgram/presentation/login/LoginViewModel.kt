@@ -1,4 +1,4 @@
-package com.example.camvidgram.presentation.viewmodels
+package com.example.camvidgram.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
