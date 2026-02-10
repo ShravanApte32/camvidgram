@@ -1,16 +1,23 @@
 package com.example.camvidgram.presentation.login
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.example.camvidgram.data.local.db.AppDatabase
+import com.example.camvidgram.data.local.entities.UserEntity
 import com.example.camvidgram.domain.models.LoginState
+import com.example.camvidgram.domain.models.RegisterState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val userDao = AppDatabase.getInstance(application).userDao()
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
     val loginState: StateFlow<LoginState> =  _loginState.asStateFlow()
 
@@ -23,12 +30,20 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch {
             _loginState.value = LoginState.Loading
 
-            delay(2000)
+            runCatching {
+                delay(2000)
+                userDao.loginUser(email,pass)
+            }.onSuccess { user ->
+                if (user != null) {
+                    _loginState.value = LoginState.Success("Login successful!")
+                } else {
+                    _loginState.value = LoginState.Error("Invalid email or password")
+                }
 
-            if (email == "sapte32@gmail.com" && pass == "Shravan32apte"){
-                _loginState.value = LoginState.Success("Login Successful!")
-            } else {
-                _loginState.value = LoginState.Error("Invalid Credentials!")
+            }.onFailure { throwable ->
+                _loginState.value = LoginState.Error(
+                    throwable.message ?: "Error logging in"
+                )
             }
         }
     }

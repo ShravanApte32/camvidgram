@@ -7,10 +7,13 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,6 +29,8 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
+    private lateinit var loadingOverlay : LinearLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +42,10 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
+        handleBackPress()
+
         // Get views
+        loadingOverlay = findViewById(R.id.loadingOverlay)
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val tilEmail = findViewById<TextInputLayout>(R.id.tilEmail)
@@ -51,6 +59,21 @@ class LoginActivity : AppCompatActivity() {
 
         observeLoginState(etEmail, etPassword)
 
+    }
+
+    private fun handleBackPress() {
+        onBackPressedDispatcher.addCallback(this) {
+            // Option A: Exit app directly
+//            finishAffinity()
+
+            // Option B (better UX): Ask before exiting
+            AlertDialog.Builder(this@LoginActivity)
+                .setTitle("Exit App")
+                .setMessage("Do you want to exit?")
+                .setPositiveButton("Yes") { _, _ -> finishAffinity() }
+                .setNegativeButton("No", null)
+                .show()
+        }
     }
 
     private fun setupClickListeners(
@@ -89,18 +112,20 @@ class LoginActivity : AppCompatActivity() {
     ): Boolean {
         var isValid = true
 
-        if (email.isEmpty()) {
+        tilEmail.error = null
+        tilPassword.error = null
+
+        if (email.isBlank()) {
             tilEmail.error = "Email is required"
             isValid = false
-        } else {
-            tilEmail.error = null
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            tilEmail.error = "Enter a valid email"
+            isValid = false
         }
 
-        if (password.isEmpty()) {
+        if (password.isBlank()) {
             tilPassword.error = "Password is required"
             isValid = false
-        } else {
-            tilPassword.error = null
         }
 
         return isValid
@@ -118,12 +143,14 @@ class LoginActivity : AppCompatActivity() {
                         // Show loading indicator
                         findViewById<Button>(R.id.btnLogin).text = "Logging in..."
                         findViewById<Button>(R.id.btnLogin).isEnabled = false
+                        loadingOverlay.visibility = LinearLayout.VISIBLE
                     }
 
                     is LoginState.Success -> {
                         // Reset button
                         findViewById<Button>(R.id.btnLogin).text = "Log In"
                         findViewById<Button>(R.id.btnLogin).isEnabled = true
+                        loadingOverlay.visibility = LinearLayout.GONE
 
                         // Show success message
                         Toast.makeText(this@LoginActivity, state.message, Toast.LENGTH_SHORT).show()
@@ -141,6 +168,7 @@ class LoginActivity : AppCompatActivity() {
                         // Reset button
                         findViewById<Button>(R.id.btnLogin).text = "Log In"
                         findViewById<Button>(R.id.btnLogin).isEnabled = true
+                        loadingOverlay.visibility = LinearLayout.GONE
 
                         // Show error
                         Toast.makeText(this@LoginActivity, state.message, Toast.LENGTH_SHORT).show()
