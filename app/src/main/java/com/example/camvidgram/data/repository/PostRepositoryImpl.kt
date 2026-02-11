@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class PostRepositoryImpl @Inject constructor(
     private val postDao: PostDao,
-    private val postApi: PostApi // We'll create this later
+    private val postApi: PostApi
 ) : PostRepository {
 
     override suspend fun savePost(post: Post) {

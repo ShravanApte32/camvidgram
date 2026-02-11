@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -43,35 +44,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Set up Action Bar
-        setSupportActionBar(binding.toolbar)
-
-
+//        setSupportActionBar(binding.toolbar)
 
         // Set up Navigation
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-
-        setupNavigation()
-
-//        btnLogout.setOnClickListener {
-//            startActivity(Intent(this, LoginActivity::class.java))
-//            finish()
-//        }
-
-    }
-
-    private fun handleBackPress() {
-        onBackPressedDispatcher.addCallback(this) {
-
-        }
-    }
-
-    private fun setupNavigation() {
-        // Wait for the NavController to be ready
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            // Navigation is now ready
-        }
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -83,39 +61,28 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // Setup BottomNavigationView with NavController
+
         binding.bottomNavigationView.setupWithNavController(navController)
 
-        // Remove the custom listener - setupWithNavController already handles navigation
-        // binding.bottomNavigationView.setOnItemSelectedListener { ... }
+//        setupNavigation()
 
-        // If you need custom behavior, use this approach:
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_camera -> {
-                    // Handle camera separately
-                    // navController.navigate(R.id.cameraActivity) // If you have a CameraActivity
-                    true
-                }
-                else -> {
-                    // Navigate only if we have a valid graph
-                    try {
-                        // Check if destination exists in graph
-                        val destination = navController.graph.findNode(item.itemId)
-                        if (destination != null) {
-                            navController.navigate(item.itemId)
-                            true
-                        } else {
-                            false
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        false
-                    }
-                }
-            }
+//        btnLogout.setOnClickListener {
+//            startActivity(Intent(this, LoginActivity::class.java))
+//            finish()
+//        }
+
+    }
+
+    private fun handleBackPress() {
+        onBackPressedDispatcher.addCallback(this) {
+            AlertDialog.Builder(this@MainActivity)
+                .setTitle("Log out")
+                .setMessage("Do you want to logout?")
+                .setPositiveButton("Yes") { _, _ -> finishAffinity() }
+                .setNegativeButton("No", null)
+                .show()
         }
     }
 
