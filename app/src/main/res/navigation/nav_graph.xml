@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_feed">
+
+    <!-- Feed Fragment -->
+    <fragment
+        android:id="@+id/navigation_feed"
+        android:name="com.example.camvidgram.presentation.homepage.feed.FeedFragment"
+        android:label="Feed"
+        tools:layout="@layout/fragment_feed" />
+
+    <!-- Search Fragment -->
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.camvidgram.presentation.homepage.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
+
+    <!-- Camera Fragment -->
+    <fragment
+        android:id="@+id/navigation_camera"
+        android:name="com.example.camvidgram.presentation.homepage.camera.CameraFragment"
+        android:label="Camera"
+        tools:layout="@layout/fragment_camera" />
+
+    <!-- Notifications Fragment -->
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.camvidgram.presentation.homepage.notifications.NotificationsFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <!-- Profile Fragment -->
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.camvidgram.presentation.homepage.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+
+</navigation>

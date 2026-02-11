@@ -61,6 +61,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     implementation(libs.androidx.activity)
+    implementation(libs.transport.runtime)
     ksp("androidx.room:room-compiler:2.6.1")
 
     // Networking
@@ -99,6 +100,12 @@ dependencies {
 
     //splash screen
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     // Firebase (optional - for auth/analytics)
     // implementation(platform("com.google.firebase:firebase-bom:32.7.4"))

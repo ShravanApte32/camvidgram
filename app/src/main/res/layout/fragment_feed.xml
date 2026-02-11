@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".presentation.homepage.feed.FeedFragment">
+
+    <!-- SwipeRefreshLayout for pull to refresh -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Loading State -->
+                <LinearLayout
+                    android:id="@+id/loadingLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="300dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:padding="32dp">
+
+                    <ProgressBar
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:indeterminate="true"
+                        android:theme="@style/ProgressBarTheme" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/loading_posts"
+                        android:textSize="14sp"
+                        android:textColor="@color/gray_600" />
+
+                </LinearLayout>
+
+                <!-- Error State -->
+                <LinearLayout
+                    android:id="@+id/errorLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="300dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="32dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:src="@drawable/ic_error"
+                        app:tint="@color/gray_500"
+                        android:contentDescription="@string/error_icon" />
+
+                    <TextView
+                        android:id="@+id/errorTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray_800" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/retryButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/retry"
+                        android:paddingStart="32dp"
+                        android:paddingEnd="32dp"
+                        app:cornerRadius="20dp"
+                        app:backgroundTint="@color/colorPrimary" />
+
+                </LinearLayout>
+
+                <!-- Success State - RecyclerView for Posts -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/postsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:clipToPadding="false"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    tools:listitem="@layout/item_post" />
+
+                <!-- Empty State -->
+                <LinearLayout
+                    android:id="@+id/emptyLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="400dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="48dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/ic_empty_feed"
+                        app:tint="@color/gray_400"
+                        android:contentDescription="@string/empty_feed_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/no_posts_yet"
+                        android:textSize="18sp"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_800" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/follow_or_create_posts"
+                        android:textSize="14sp"
+                        android:textColor="@color/gray_600"
+                        android:textAlignment="center" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/createPostButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/create_first_post"
+                        android:paddingStart="32dp"
+                        android:paddingEnd="32dp"
+                        app:cornerRadius="20dp"
+                        app:backgroundTint="@color/colorPrimary" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!-- Floating Action Button for creating new post -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCreatePost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        android:contentDescription="@string/create_new_post"
+        app:backgroundTint="@color/colorPrimary"
+        app:tint="@color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

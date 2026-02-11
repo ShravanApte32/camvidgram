@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">camvidgram</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="loading_posts">Loading posts...</string>
+    <string name="error_icon">Error icon</string>
+    <string name="retry">Retry</string>
+    <string name="empty_feed_icon">Empty feed icon</string>
+    <string name="no_posts_yet">No posts yet!</string>
+    <string name="follow_or_create_posts">Follow users or create your first post</string>
+    <string name="create_first_post">Create First Post</string>
+    <string name="create_new_post">Create new post</string>
 </resources>

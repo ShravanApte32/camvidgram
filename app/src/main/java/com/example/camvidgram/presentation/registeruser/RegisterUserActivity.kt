@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,8 +19,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.camvidgram.R
 import com.example.camvidgram.domain.models.RegisterState
 import com.example.camvidgram.presentation.login.LoginActivity
-import com.example.camvidgram.presentation.login.LoginViewModel
-import com.example.camvidgram.presentation.main.MainActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch

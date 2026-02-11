@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Post Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:gravity="center_vertical">
+
+            <!-- Profile Image -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_profile_placeholder"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@android:color/darker_gray" />
+
+            <!-- Username and Location -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:id="@+id/usernameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/locationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/darker_gray" />
+
+            </LinearLayout>
+
+            <!-- More Options -->
+            <ImageView
+                android:id="@+id/moreOptionsButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_more"
+                android:contentDescription="More options"
+                app:tint="@android:color/darker_gray" />
+
+        </LinearLayout>
+
+        <!-- Post Image -->
+        <ImageView
+            android:id="@+id/postImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_image_placeholder" />
+
+        <!-- Post Actions -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <!-- Like Button -->
+            <ImageView
+                android:id="@+id/likeButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_like"
+                android:contentDescription="Like"
+                app:tint="@android:color/darker_gray" />
+
+            <!-- Comment Button -->
+            <ImageView
+                android:id="@+id/commentButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_comment"
+                android:contentDescription="Comment"
+                android:layout_marginStart="12dp"
+                app:tint="@android:color/darker_gray" />
+
+            <!-- Share Button -->
+            <ImageView
+                android:id="@+id/shareButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_share"
+                android:contentDescription="Share"
+                android:layout_marginStart="12dp"
+                app:tint="@android:color/darker_gray" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Save Button -->
+            <ImageView
+                android:id="@+id/saveButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_save"
+                android:contentDescription="Save"
+                app:tint="@android:color/darker_gray" />
+
+        </LinearLayout>
+
+        <!-- Post Stats -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="12dp">
+
+            <!-- Likes Count -->
+            <TextView
+                android:id="@+id/likesCountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 likes"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Caption -->
+            <TextView
+                android:id="@+id/captionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Caption text here"
+                android:textSize="14sp" />
+
+            <!-- Comments Count -->
+            <TextView
+                android:id="@+id/commentsCountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="View all 0 comments"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray" />
+
+            <!-- Timestamp -->
+            <TextView
+                android:id="@+id/timestampText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Just now"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
