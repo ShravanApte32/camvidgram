@@ -11,4 +11,5 @@
     <string name="follow_or_create_posts">Follow users or create your first post</string>
     <string name="create_first_post">Create First Post</string>
     <string name="create_new_post">Create new post</string>
+    <string name="send">send</string>
 </resources>

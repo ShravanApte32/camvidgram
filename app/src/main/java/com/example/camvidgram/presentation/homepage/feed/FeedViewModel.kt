@@ -3,6 +3,7 @@ package com.example.camvidgram.presentation.homepage.feed
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.camvidgram.domain.models.FeedUiState
+import com.example.camvidgram.domain.usecases.DisLikePostUseCase
 import com.example.camvidgram.domain.usecases.GetPostsUseCase
 import com.example.camvidgram.domain.usecases.LikePostUseCase
 import com.example.camvidgram.domain.usecases.SyncPostsUseCase
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class FeedViewModel @Inject constructor(
     private val getPostsUseCase: GetPostsUseCase,
     private val likePostUseCase: LikePostUseCase,
+    private val dislikePostUseCase : DisLikePostUseCase,
     private val syncPostsUseCase: SyncPostsUseCase
 ) : ViewModel() {
 
@@ -73,34 +75,51 @@ class FeedViewModel @Inject constructor(
                 val currentPosts = _uiState.value.posts.toMutableList()
                 val postIndex = currentPosts.indexOfFirst { it.id == postId }
 
-                if (postIndex != -1) {
-                    val post = currentPosts[postIndex]
-                    val updatedPost = if (post.isLiked) {
-                        post.copy(
-                            likes = post.likes - 1,
-                            isLiked = false
-                        )
-                    } else {
-                        post.copy(
-                            likes = post.likes + 1,
-                            isLiked = true
-                        )
-                    }
+                if(postIndex == -1) return@launch
 
-                    currentPosts[postIndex] = updatedPost
-                    _uiState.value = _uiState.value.copy(
-                        posts = currentPosts
-                    )
+                val posts = currentPosts[postIndex]
 
-                    // Show feedback
-                    _events.value = if (updatedPost.isLiked) {
-                        FeedEvent.PostLiked("Post liked!")
-                    } else {
-                        FeedEvent.PostUnliked("Post unliked!")
-                    }
-                    // Clear event after consumption
-                    _events.value = null
-                }
+                if (posts.isLiked) return@launch
+
+                val updatedPost = posts.copy(
+                    likes = posts.likes + 1,
+                    isLiked = true
+                )
+
+                currentPosts[postIndex] = updatedPost
+                _uiState.value = _uiState.value.copy(posts = currentPosts)
+
+                _events.value = FeedEvent.PostLiked("Post Liked!")
+                _events.value = null
+
+//                if (postIndex != -1) {
+//                    val post = currentPosts[postIndex]
+//                    val updatedPost = if (post.isLiked) {
+//                        post.copy(
+//                            likes = post.likes - 1,
+//                            isLiked = false
+//                        )
+//                    } else {
+//                        post.copy(
+//                            likes = post.likes + 1,
+//                            isLiked = true
+//                        )
+//                    }
+//
+//                    currentPosts[postIndex] = updatedPost
+//                    _uiState.value = _uiState.value.copy(
+//                        posts = currentPosts
+//                    )
+//
+//                    // Show feedback
+//                    _events.value = if (updatedPost.isLiked) {
+//                        FeedEvent.PostLiked("Post liked!")
+//                    } else {
+//                        FeedEvent.PostUnliked("Post unliked!")
+//                    }
+//                    // Clear event after consumption
+//                    _events.value = null
+//                }
             } catch (e: Exception) {
                 Timber.e(e, "Error liking post")
                 _events.value = FeedEvent.Error("Failed to like post")
@@ -112,9 +131,28 @@ class FeedViewModel @Inject constructor(
     fun unlikePost(postId: String) {
         viewModelScope.launch {
             try {
-                // For now, we'll use the same likePostUseCase (toggle behavior)
-                // In a real app, you might have separate use cases
-                likePostUseCase(postId)
+                dislikePostUseCase(postId)
+
+                val currentPosts = _uiState.value.posts.toMutableList()
+                val postIndex = currentPosts.indexOfFirst { it.id == postId }
+
+                if ( postIndex == -1 ) return@launch
+
+                val post = currentPosts[postIndex]
+
+                if (!post.isLiked) return@launch
+
+                val updatedPost = post.copy(
+                    likes = maxOf(0,post.likes-1),
+                    isLiked = false
+                )
+
+                currentPosts[postIndex] = updatedPost
+                _uiState.value = _uiState.value.copy(posts = currentPosts)
+
+                _events.value = FeedEvent.PostUnliked("Like removed")
+                _events.value = null
+
             } catch (e: Exception) {
                 Timber.e(e, "Error unliking post")
                 _events.value = FeedEvent.Error("Failed to unlike post")

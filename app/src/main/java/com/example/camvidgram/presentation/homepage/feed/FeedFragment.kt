@@ -48,7 +48,11 @@ class FeedFragment : Fragment() {
     private fun setupAdapter() {
         postAdapter = PostAdapter(
             onLikeClick = { post ->
-                viewModel.likePost(post.id)
+                if (post.isLiked){
+                    viewModel.unlikePost(post.id)
+                } else {
+                    viewModel.likePost(post.id)
+                }
             },
             onCommentClick = { post ->
                 // Navigate to comments
@@ -156,6 +160,12 @@ class FeedFragment : Fragment() {
 
     private fun navigateToComments(postId: String) {
         // TODO: Implement navigation to comments
+        openComments(postId)
+    }
+
+    private fun openComments(postId: String) {
+        CommentsBottomSheet.newInstance(postId)
+            .show(childFragmentManager, "CommentsBottomSheet")
     }
 
     private fun sharePost(post: Post) {

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.camvidgram.R
 import com.example.camvidgram.databinding.ItemPostBinding
 import com.example.camvidgram.domain.models.Post
 
@@ -58,9 +59,9 @@ class PostAdapter(
 
                 // Set like button state
                 val likeIcon = if (post.isLiked) {
-                    android.R.drawable.btn_star_big_on
+                    R.drawable.ic_heart_like
                 } else {
-                    android.R.drawable.btn_star_big_off
+                    R.drawable.ic_heart_unlike
                 }
                 likeButton.setImageResource(likeIcon)
 
