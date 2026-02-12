@@ -1,10 +1,14 @@
 package com.example.camvidgram.presentation.homepage.feed.adapter
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.camvidgram.R
 import com.example.camvidgram.databinding.ItemPostBinding
 import com.example.camvidgram.domain.models.Post
 
@@ -34,6 +38,26 @@ class PostAdapter(
         private val binding: ItemPostBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private val gestureDetector = android.view.GestureDetector(
+            binding.root.context,
+            object : android.view.GestureDetector.SimpleOnGestureListener() {
+                override fun onDoubleTap(e: MotionEvent): Boolean {
+                    val pos = bindingAdapterPosition
+                    if (pos == RecyclerView.NO_POSITION) return false
+
+                    val post = getItem(pos)
+
+                    if (!post.isLiked) {
+                        onLikeClick(post)
+                        animateLike()
+                    }
+                    return true
+                }
+
+            }
+        )
+
+        @SuppressLint("ClickableViewAccessibility")
         fun bind(post: Post) {
             binding.apply {
                 // Set profile image
@@ -58,15 +82,20 @@ class PostAdapter(
 
                 // Set like button state
                 val likeIcon = if (post.isLiked) {
-                    android.R.drawable.btn_star_big_on
+                    R.drawable.ic_heart_like
                 } else {
-                    android.R.drawable.btn_star_big_off
+                    R.drawable.ic_heart_unlike
                 }
                 likeButton.setImageResource(likeIcon)
 
                 // Set click listeners
                 profileImage.setOnClickListener {
                     onProfileClick(post.userId)
+                }
+
+                postImage.setOnTouchListener { _, event ->
+                    gestureDetector.onTouchEvent(event)
+                    true
                 }
 
                 likeButton.setOnClickListener {
@@ -86,6 +115,30 @@ class PostAdapter(
                 }
             }
         }
+
+        private fun animateLike() {
+            binding.likeOverlay?.apply {
+                visibility = View.VISIBLE
+                alpha = 0f
+                scaleX = 0.5f
+                scaleY = 0.5f
+
+                animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(180)
+                    .withEndAction {
+                        animate()
+                            .alpha(0f)
+                            .setDuration(180)
+                            .withEndAction {
+                                visibility = View.GONE
+                            }
+                    }
+            }
+        }
+
     }
 }
 
