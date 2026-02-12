@@ -3,7 +3,7 @@ package com.example.camvidgram.domain.models
 import java.util.UUID
 
 data class Post(
-    val id: String = UUID.randomUUID().toString(),
+    val id: String,
     val userId: String,
     val username: String,
     val userProfileImage: String? = null,

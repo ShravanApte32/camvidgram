@@ -77,7 +77,7 @@ class FeedFragment : Fragment() {
         binding.postsRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = postAdapter
-            setHasFixedSize(true)
+//            setHasFixedSize(true)
         }
     }
 
@@ -183,7 +183,31 @@ class FeedFragment : Fragment() {
 
     private fun showPostOptions(post: Post) {
         // TODO: Implement options dialog
+        val options = arrayOf("Delete post", "Cancel")
+
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle("Post options")
+            .setItems(options) { dialog, which ->
+                when (which) {
+                    0 -> showDeleteConfirmation(post) // Delete
+                    1 -> dialog.dismiss()
+                }
+            }
+            .show()
     }
+
+    private fun showDeleteConfirmation(post: Post) {
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle("Delete post?")
+            .setMessage("This action cannot be undone.")
+            .setPositiveButton("Delete") { _, _ ->
+                viewModel.deletePost(post.id)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

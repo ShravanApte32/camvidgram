@@ -65,14 +65,29 @@
 
         </LinearLayout>
 
-        <!-- Post Image -->
-        <ImageView
-            android:id="@+id/postImage"
+        <!-- Post Image with overlay -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_image_placeholder" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/postImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_image_placeholder" />
+
+            <!-- Like overlay (hidden by default) -->
+            <ImageView
+                android:id="@+id/likeOverlay"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/ic_heart_like" />
+        </FrameLayout>
+
 
         <!-- Post Actions -->
         <LinearLayout

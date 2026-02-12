@@ -11,22 +11,26 @@ import java.util.UUID
 import javax.inject.Inject
 
 class CommentsRepositoryImpl @Inject constructor(
-    private val commentDao: CommentDao
+    private val dao: CommentDao
 ) : CommentsRepository {
 
     override fun observeComments(postId: String): Flow<List<Comment>> =
-        commentDao.observeComments(postId)
-            .map { list -> list.map { it.toDomain() } }
+        dao.observeComments(postId)
+            .map { list ->
+                list.map { it.toDomain() }
+            }
 
     override suspend fun addComment(postId: String, text: String) {
-        val comment = CommentEntity(
-            id = UUID.randomUUID().toString(),
-            postId = postId,
-            userName = "Test",                 // replace with real user
-            text = text,
-            time = System.currentTimeMillis(),
-            profileImageUrl = null
+        dao.upsert(
+            CommentEntity(
+                id = UUID.randomUUID().toString(),
+                postId = postId,
+                userName = "Test",
+                text = text,
+                time = System.currentTimeMillis(),
+                profileImageUrl = null
+            )
         )
-        commentDao.upsert(comment)
     }
 }
+

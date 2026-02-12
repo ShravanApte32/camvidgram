@@ -91,6 +91,7 @@ class PostRepositoryImpl @Inject constructor(
     private fun getDummyPosts(): List<Post> {
         return listOf(
             Post(
+                id = "123456",
                 userId = "user1",
                 username = "android_dev",
                 userProfileImage = "https://picsum.photos/200",
@@ -102,6 +103,7 @@ class PostRepositoryImpl @Inject constructor(
                 aspectRatio = 0.67f
             ),
             Post(
+                id = "654321",
                 userId = "user2",
                 username = "kotlin_coder",
                 userProfileImage = "https://picsum.photos/201",
@@ -114,6 +116,7 @@ class PostRepositoryImpl @Inject constructor(
                 aspectRatio = 0.8f
             ),
             Post(
+                id = "162534",
                 userId = "user3",
                 username = "travel_lover",
                 userProfileImage = "https://picsum.photos/202",

@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.camvidgram.databinding.BottomSheetCommentsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CommentsBottomSheet : BottomSheetDialogFragment() {
@@ -78,11 +81,15 @@ class CommentsBottomSheet : BottomSheetDialogFragment() {
 
     private fun observeComments(postId: String) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getComments(postId).collect { comments ->
-                adapter.submitList(comments)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getComments(postId).collect { comments ->
+                    Timber.d("UI received ${comments.size} comments")
+                    adapter.submitList(comments.toList())
+                }
             }
         }
     }
+
 
     private fun setupSendComments(postId: String) {
         binding.sendButton.setOnClickListener {

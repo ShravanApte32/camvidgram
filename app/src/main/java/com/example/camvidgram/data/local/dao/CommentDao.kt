@@ -10,7 +10,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CommentDao {
 
-    @Query("SELECT * FROM comments WHERE postId = :postId ORDER BY time DESC")
+    @Query("""
+        SELECT * FROM comments 
+        WHERE post_id = :postId 
+        ORDER BY time DESC
+    """)
     fun observeComments(postId: String): Flow<List<CommentEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
