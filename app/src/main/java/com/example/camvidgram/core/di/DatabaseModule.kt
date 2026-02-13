@@ -2,6 +2,7 @@ package com.example.camvidgram.core.di
 
 import android.content.Context
 import com.example.camvidgram.data.local.dao.CommentDao
+import com.example.camvidgram.data.local.dao.NotificationDao
 import com.example.camvidgram.data.local.db.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -25,4 +26,7 @@ object DatabaseModule {
 
     @Provides
     fun provideCommentDao(db: AppDatabase): CommentDao = db.commentDao()
+
+    @Provides
+    fun provideNotificationDao(db: AppDatabase): NotificationDao = db.notificationDao()
 }

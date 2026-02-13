@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp">
+
+    <!-- User Avatar -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:shapeAppearanceOverlay="@style/circularImageView"
+        app:strokeColor="#E0E0E0"
+        app:strokeWidth="1dp"
+        tools:src="@tools:sample/avatars" />
+
+    <!-- Notification Content -->
+    <TextView
+        android:id="@+id/notification_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/notification_image"
+        app:layout_constraintStart_toEndOf="@+id/user_avatar"
+        app:layout_constraintTop_toTopOf="@+id/user_avatar"
+        app:layout_constraintBottom_toTopOf="@+id/notification_time"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="john_doe started following you." />
+
+    <!-- Time -->
+    <TextView
+        android:id="@+id/notification_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#8E8E8E"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/notification_image"
+        app:layout_constraintStart_toEndOf="@+id/user_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/notification_text"
+        app:layout_constraintBottom_toBottomOf="@+id/user_avatar"
+        tools:text="2h" />
+
+    <!-- Notification Image (for like/comment notifications) -->
+    <ImageView
+        android:id="@+id/notification_image"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@tools:sample/backgrounds/scenic"
+        tools:visibility="visible" />
+
+    <!-- Follow Button (for follow requests) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/follow_button"
+        android:layout_width="86dp"
+        android:layout_height="32dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Follow"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:cornerRadius="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:rippleColor="@android:color/black"
+        tools:visibility="visible" />
+
+    <!-- Blue Dot for Unread Notifications -->
+    <View
+        android:id="@+id/unread_dot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/circle_blue_dot"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="-4dp"
+        android:layout_marginTop="-4dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
