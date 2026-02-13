@@ -158,14 +158,18 @@ class CameraFragment : Fragment() {
     private fun toggleFlash() {
         flashMode = if (flashMode == ImageCapture.FLASH_MODE_OFF) {
             flashButton.setImageResource(R.drawable.ic_flash_on)
+            // Set tint to yellow when flash is on
+            flashButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow))
             ImageCapture.FLASH_MODE_ON
         } else {
             flashButton.setImageResource(R.drawable.ic_flash_off)
+            // Set tint to white when flash is off
+            flashButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
             ImageCapture.FLASH_MODE_OFF
         }
 
-        // Rebind camera with new flash mode
-        bindCameraUseCases()
+        // Update the flash mode on the existing imageCapture instance
+        imageCapture?.flashMode = flashMode
     }
 
     private fun switchCamera() {
